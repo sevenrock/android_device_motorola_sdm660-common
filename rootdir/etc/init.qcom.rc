@@ -104,12 +104,6 @@ on late-fs
 
 on post-fs
     chmod 0755 /sys/kernel/debug/tracing
-    # Change permission for fingerprint sensor
-    chown system oem_5004 /sys/devices/soc/soc:fpc_fpc1020/nav
-    chown system oem_5004 /sys/devices/soc/soc:fpc_fpc1020/dev_enable
-    chown system oem_5004 /sys/devices/soc/soc:fpc_fpc1020/irq
-    chown system oem_5004 /sys/devices/soc/soc:fpc_fpc1020/irq_cnt
-    chmod 0440 /sys/devices/soc/soc:fpc_fpc1020/irq_cnt
     # MOT_LED_CALIBRATION
     chown cameraserver /mnt/vendor/persist/camera/ledcal
     restorecon_recursive   /carrier
@@ -337,9 +331,6 @@ on boot
     # load WIGIG platform driver
     insmod /vendor/lib/modules/msm_11ad_proxy.ko
 
-    # FPC button permissions
-    chown system system /sys/bus/spi/devices/spi8.0/key_enable
-
     # Change ownership and permission for AMPS factory testing
     chown root oem_5004 /sys/devices/soc/a800000.ssusb/modusb_enable
     chmod 0660 /sys/devices/soc/a800000.ssusb/modusb_enable
@@ -419,12 +410,6 @@ on post-fs-data
 
     # Create directory used by media clients
     mkdir /data/vendor/media 0770 mediacodec media
-
-    #Create directories for Fingerprint
-    mkdir /data/vendor/misc/qti_fp 0770 system system
-    mkdir /data/vendor/misc/qti_fp/bg_estimation 0770 system system
-    mkdir /data/vendor/misc/qti_fp/calib_test 0770 system system
-    mkdir /data/vendor/misc/qti_fp/database 0770 system system
 
     # create QDMA dropbox
     mkdir /data/vendor/qdmastats 0700 system system
@@ -704,10 +689,6 @@ on post-fs-data
 
     # SD card encryption metadata
     mkdir /data/misc/sds 0750 root root
-
-    # Required by FingerPrint Cards (FPC) via init so we dont need to give qseecomd or fingerprintd permissions to create them
-    mkdir /data/fpc 0700 system system
-    mkdir /data/.fps 0770 system input
 
     #Folder for hardware properties
     mkdir /data/hardware_revisions 0755 system system
