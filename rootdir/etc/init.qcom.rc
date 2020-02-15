@@ -707,9 +707,6 @@ on post-fs-data
     # Imager tuning data for camera subsystem
     mkdir /data/vendor/misc/imager 0771 camera camera
 
-    # NFC vendor data
-    mkdir /data/vendor/nfc 0770 nfc nfc
-
     #Create directory for adspd
     mkdir /data/adspd 0770 audio diag
 
@@ -719,12 +716,6 @@ on post-fs-data
     mkdir /data/tombstones/dsps 0771 system system
 
     setprop vold.post_fs_data_done 1
-
-service vendor.nqnfcinfo /vendor/bin/nqnfcinfo
-    class late_start
-    group nfc
-    user system
-    oneshot
 
 service vendor.iop /vendor/bin/iop
     class main
@@ -1136,11 +1127,6 @@ service vendor.qseeproxydaemon /vendor/bin/qseeproxydaemon
     class late_start
     user system
     group system
-
-service vendor.esepmdaemon /vendor/bin/esepmdaemon
-    class core
-    user system
-    group nfc
 
 service vendor.qdmastatsd /vendor/bin/qdmastatsd
     class late_start
